@@ -80,9 +80,9 @@ const getUserByUserId = async (req, res) => {
 };
 
 const deleteUserByUserId = async (req, res) => {
-  const { userid } = req.params;
+  const { id } = req.params;
   try {
-    await users.destroy({ where: { userid } });
+    await users.destroy({ where: { id } });
     res.send("DELETED!");
   } catch (error) {
     res.status(500).send(error);
@@ -129,6 +129,25 @@ const createRootUser = async (req, res) => {
     req.status(500).send(error);
   }
 };
+
+const getAllRootUsers = async (req, res) => {
+  try {
+    const result = await rootuser.findAll();
+    res.send(result)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+}
+
+const deleteRootUserById = async (req, res) => {
+  const {id} = req.params;
+  try {
+    await rootuser.destroy({where: {id}});
+    res.send('DELETED');
+  } catch (error) {
+    res.status(500).send(error)
+  }
+}
 module.exports = {
   createUser,
   loginUser,
@@ -137,4 +156,7 @@ module.exports = {
   createRootUser,
   getUserByUserId,
   loginRootUser,
+  deleteUserByUserId,
+  getAllRootUsers,
+  deleteRootUserById
 };
